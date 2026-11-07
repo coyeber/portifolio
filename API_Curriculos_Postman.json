@@ -1,0 +1,638 @@
+{
+  "info": {
+    "name": "API Curriculos - Express + NeonDB + Vercel",
+    "description": "Colecao da atividade. OBRIGATORIO: alterar baseUrl para sua URL publicada na Vercel. Os IDs podem ser alterados nas variaveis da colecao. Rotas organizadas por entidade e relacionamentos.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "00 - Verificacao",
+      "description": "Confirme o funcionamento e a conexao ao NeonDB.",
+      "item": [
+        {
+          "name": "00 - Inicio",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/",
+            "description": ""
+          }
+        },
+        {
+          "name": "01 - Health com banco",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/health",
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pessoas (CRUD)",
+      "description": "CRUD completo da tabela pessoas: GET, POST, PUT, DELETE.",
+      "item": [
+        {
+          "name": "01 - Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/pessoas",
+            "description": ""
+          }
+        },
+        {
+          "name": "02 - Consultar por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/pessoas/{{pessoaId}}",
+            "description": ""
+          }
+        },
+        {
+          "name": "03 - Criar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/pessoas",
+            "description": "Ao criar, atualiza automaticamente a variavel pessoaId.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Camila Lima\",\n  \"email\": \"camila.lima.2026@example.com\",\n  \"telefone\": \"(81) 90000-0999\",\n  \"cidade\": \"Recife - PE\",\n  \"resumo\": \"Estudante de tecnologia e desenvolvimento web.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  const data = pm.response.json();",
+                  "  pm.collectionVariables.set(\"pessoaId\", data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "04 - Atualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/pessoas/{{pessoaId}}",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cidade\": \"Olinda - PE\",\n  \"resumo\": \"Atualizado por PUT\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "05 - Excluir",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/pessoas/{{pessoaId}}",
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "Formacoes (CRUD)",
+      "description": "CRUD completo da tabela formacoes: GET, POST, PUT, DELETE.",
+      "item": [
+        {
+          "name": "01 - Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/formacoes",
+            "description": ""
+          }
+        },
+        {
+          "name": "02 - Consultar por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/formacoes/{{formacaoId}}",
+            "description": ""
+          }
+        },
+        {
+          "name": "03 - Criar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/formacoes",
+            "description": "Ao criar, atualiza automaticamente a variavel formacaoId.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pessoa_id\": \"{{pessoaId}}\",\n  \"curso\": \"Analise e Desenvolvimento de Sistemas\",\n  \"instituicao\": \"Faculdade Exemplo\",\n  \"inicio\": \"2025-02-01\",\n  \"situacao\": \"Cursando\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  const data = pm.response.json();",
+                  "  pm.collectionVariables.set(\"formacaoId\", data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "04 - Atualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/formacoes/{{formacaoId}}",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"situacao\": \"Concluido\",\n  \"fim\": \"2026-11-01\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "05 - Excluir",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/formacoes/{{formacaoId}}",
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "Experiencias (CRUD)",
+      "description": "CRUD completo da tabela experiencias: GET, POST, PUT, DELETE.",
+      "item": [
+        {
+          "name": "01 - Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/experiencias",
+            "description": ""
+          }
+        },
+        {
+          "name": "02 - Consultar por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/experiencias/{{experienciaId}}",
+            "description": ""
+          }
+        },
+        {
+          "name": "03 - Criar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/experiencias",
+            "description": "Ao criar, atualiza automaticamente a variavel experienciaId.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pessoa_id\": \"{{pessoaId}}\",\n  \"empresa\": \"Empresa Postman\",\n  \"cargo\": \"Estagiario de TI\",\n  \"inicio\": \"2026-01-10\",\n  \"descricao\": \"Suporte e consultas de dados.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  const data = pm.response.json();",
+                  "  pm.collectionVariables.set(\"experienciaId\", data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "04 - Atualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/experiencias/{{experienciaId}}",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cargo\": \"Desenvolvedor Junior\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "05 - Excluir",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/experiencias/{{experienciaId}}",
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "Projetos (CRUD)",
+      "description": "CRUD completo da tabela projetos: GET, POST, PUT, DELETE.",
+      "item": [
+        {
+          "name": "01 - Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/projetos",
+            "description": ""
+          }
+        },
+        {
+          "name": "02 - Consultar por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/projetos/{{projetoId}}",
+            "description": ""
+          }
+        },
+        {
+          "name": "03 - Criar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/projetos",
+            "description": "Ao criar, atualiza automaticamente a variavel projetoId.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pessoa_id\": \"{{pessoaId}}\",\n  \"nome\": \"API Curriculos\",\n  \"descricao\": \"CRUD REST com NeonDB\",\n  \"url\": \"https://example.com/repositorio\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  const data = pm.response.json();",
+                  "  pm.collectionVariables.set(\"projetoId\", data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "04 - Atualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/projetos/{{projetoId}}",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"descricao\": \"API publicada e testada via Postman\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "05 - Excluir",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/projetos/{{projetoId}}",
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "Habilidades (CRUD)",
+      "description": "CRUD completo da tabela habilidades: GET, POST, PUT, DELETE.",
+      "item": [
+        {
+          "name": "01 - Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/habilidades",
+            "description": ""
+          }
+        },
+        {
+          "name": "02 - Consultar por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/habilidades/{{habilidadeId}}",
+            "description": ""
+          }
+        },
+        {
+          "name": "03 - Criar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/habilidades",
+            "description": "Ao criar, atualiza automaticamente a variavel habilidadeId.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Docker Exemplo 2026\",\n  \"categoria\": \"DevOps\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  const data = pm.response.json();",
+                  "  pm.collectionVariables.set(\"habilidadeId\", data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "04 - Atualizar",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/habilidades/{{habilidadeId}}",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categoria\": \"Ferramentas de desenvolvimento\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "05 - Excluir",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/habilidades/{{habilidadeId}}",
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "Relacionamentos N:N (CRUD)",
+      "description": "Tabela de ligacao pessoa_habilidades (chave composta). Crie primeiro uma pessoa e uma habilidade.",
+      "item": [
+        {
+          "name": "01 - Listar relacionamentos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/pessoa-habilidades",
+            "description": ""
+          }
+        },
+        {
+          "name": "02 - Consultar relacionamento",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/pessoa-habilidades/{{pessoaId}}/{{habilidadeId}}",
+            "description": ""
+          }
+        },
+        {
+          "name": "03 - Criar relacionamento",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/pessoa-habilidades",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pessoa_id\": \"{{pessoaId}}\",\n  \"habilidade_id\": \"{{habilidadeId}}\",\n  \"nivel\": \"Basico\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "04 - Atualizar nivel",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/pessoa-habilidades/{{pessoaId}}/{{habilidadeId}}",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nivel\": \"Avancado\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "05 - Excluir relacionamento",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/pessoa-habilidades/{{pessoaId}}/{{habilidadeId}}",
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "Curriculo completo",
+      "description": "Mostra na mesma resposta pessoa, formacoes, experiencias, projetos e habilidades.",
+      "item": [
+        {
+          "name": "GET - Curriculo pessoa 1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/curriculos/{{pessoaId}}",
+            "description": ""
+          }
+        },
+        {
+          "name": "GET - Curriculo pessoa 2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/curriculos/{{pessoaId2}}",
+            "description": ""
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://SEU-PROJETO.vercel.app",
+      "type": "string"
+    },
+    {
+      "key": "pessoaId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "pessoaId2",
+      "value": "2",
+      "type": "string"
+    },
+    {
+      "key": "formacaoId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "experienciaId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "projetoId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "habilidadeId",
+      "value": "1",
+      "type": "string"
+    }
+  ]
+}

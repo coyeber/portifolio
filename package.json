@@ -1,0 +1,20 @@
+{
+  "name": "api-curriculos-express-neon",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "API REST de curriculos com CRUD, relacionamentos, Express, PostgreSQL (NeonDB) e Vercel",
+  "main": "index.js",
+  "scripts": {
+    "start": "node local.js",
+    "dev": "node --watch local.js",
+    "check": "node --check index.js && node --check local.js"
+  },
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "pg": "^8.16.3"
+  }
+}
